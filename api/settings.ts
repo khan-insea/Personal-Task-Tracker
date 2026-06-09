@@ -1,4 +1,4 @@
-import { ensureSheets, getSheetsClient, requireAuth, sanitize } from "./_sheets";
+import { ensureSheets, getSheetsClient, requireAuth, sanitize, checkEnvConfig } from "./_sheets.js";
 
 export default async function handler(req: any, res: any) {
   if (req.method === "OPTIONS") {
@@ -6,6 +6,10 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!requireAuth(req, res)) {
+    return;
+  }
+
+  if (!checkEnvConfig(res)) {
     return;
   }
 
